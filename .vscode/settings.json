@@ -1,0 +1,319 @@
+{
+  "commit-message-editor.view.defaultView": "form",
+  "commit-message-editor.tokens": [
+    {
+      "label": "Type",
+      "name": "type",
+      "type": "enum",
+      "options": [
+        {
+          "label": "🩹 fix",
+          "description": "A bug fix"
+        },
+        {
+          "label": "✨ feat",
+          "description": "A new feature"
+        },
+        {
+          "label": "✅ test",
+          "description": "Adding missing tests or correcting existing tests"
+        },
+        {
+          "label": "👷 build",
+          "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"
+        },
+        {
+          "label": "🧑‍💻 chore",
+          "description": "Updating grunt tasks etc; no production code change"
+        },
+        {
+          "label": "👷 ci",
+          "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
+        },
+        {
+          "label": "📝 docs",
+          "description": "Documentation only changes"
+        },
+        {
+          "label": "⚡️ perf",
+          "description": "A code change that improves performance"
+        },
+        {
+          "label": "♻️ refactor",
+          "description": "A code change that neither fixes a bug nor adds a feature"
+        },
+        {
+          "label": "⏪️ revert"
+        },
+        {
+          "label": "🎨 style",
+          "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+        },
+        {
+          "label": "⚗ experiment",
+          "description": "Perform experiments."
+        },
+        {
+          "label": "👽 external api",
+          "description": "Update code due to external API changes."
+        },
+        {
+          "label": "🚑 critical hotfix",
+          "description": "Critical hotfix."
+        },
+        {
+          "label": "💫 animation",
+          "description": "Add or update animations and transitions."
+        },
+        {
+          "label": "⬇️ downgrade dep",
+          "description": "Downgrade dependencies."
+        },
+        {
+          "label": "⬆️ upgrade dep",
+          "description": "Upgrade dependencies."
+        },
+        {
+          "label": "🎨 format",
+          "description": "Improve structure / format of the code."
+        },
+        {
+          "label": "🍻",
+          "description": "Write code drunkenly."
+        },
+        {
+          "label": "🍱 assets",
+          "description": "Add or update assets."
+        },
+        {
+          "label": "🔖 version",
+          "description": "Release / Version tags."
+        },
+        {
+          "label": "💥 breaking change",
+          "description": "Introduce breaking changes."
+        },
+        {
+          "label": "🏗 arch",
+          "description": "Make architectural changes."
+        },
+        {
+          "label": "💡 comments",
+          "description": "Add or update comments in source code."
+        },
+        {
+          "label": "👥 contribs",
+          "description": "Add or update contributor(s)."
+        },
+        {
+          "label": "📸 snapshot",
+          "description": "Add or update snapshots."
+        },
+        {
+          "label": "🗃 db",
+          "description": "Perform database related changes."
+        },
+        {
+          "label": "📈 analytics",
+          "description": "Add or update analytics or track code."
+        },
+        {
+          "label": "🚸 ux",
+          "description": "Improve user experience / usability."
+        },
+        {
+          "label": "🤡 mock",
+          "description": "Mock things."
+        },
+        {
+          "label": "⚰️ dead code",
+          "description": "Remove dead code."
+        },
+        {
+          "label": "🚧 wip",
+          "description": "Work in progress."
+        },
+        {
+          "label": "🥚 easter egg",
+          "description": "Add or update an easter egg."
+        },
+        {
+          "label": "🔥 remove",
+          "description": "Remove code or files."
+        },
+        {
+          "label": "🌐 i18n",
+          "description": "Internationalization and localization."
+        },
+        {
+          "label": "🥅 error handling",
+          "description": "Catch errors."
+        },
+        {
+          "label": "💚 ci",
+          "description": "Fix CI Build."
+        },
+        {
+          "label": "🔨 dev scripts",
+          "description": "Add or update development scripts."
+        },
+        {
+          "label": "➖ deps",
+          "description": "Remove a dependency."
+        },
+        {
+          "label": "➕ deps",
+          "description": "Add a dependency."
+        },
+        {
+          "label": "📱 ui",
+          "description": "Work on responsive design."
+        },
+        {
+          "label": "🏷️ types",
+          "description": "Add or update types."
+        },
+        {
+          "label": "💄 ui",
+          "description": "Add or update the UI and style files."
+        },
+        {
+          "label": "🔒 sec",
+          "description": "Fix security issues."
+        },
+        {
+          "label": "🔊 logs",
+          "description": "Add or update logs."
+        },
+        {
+          "label": "🔍 seo",
+          "description": "Improve SEO."
+        },
+        {
+          "label": "📝 docs",
+          "description": "Add or update documentation."
+        },
+        {
+          "label": "🧐 exploration",
+          "description": "Data exploration/inspection."
+        },
+        {
+          "label": "🔇 logs",
+          "description": "Remove logs."
+        },
+        {
+          "label": "📦 package",
+          "description": "Add or update compiled files or packages."
+        },
+        {
+          "label": "📄 license",
+          "description": "Add or update license."
+        },
+        {
+          "label": "🛂 sec",
+          "description": "Work on code related to authorization, roles and permissions."
+        },
+        {
+          "label": "✏️ typos",
+          "description": "Fix typos."
+        },
+        {
+          "label": "💩",
+          "description": "Write bad code that needs to be improved."
+        },
+        {
+          "label": "📌 deps",
+          "description": "Pin dependencies to specific versions."
+        },
+        {
+          "label": "🚀 deploy",
+          "description": "Deploy stuff."
+        },
+        {
+          "label": "🚨 fix",
+          "description": "Fix compiler / linter warnings."
+        },
+        {
+          "label": "🙈 ignore",
+          "description": "Add or update a .gitignore file."
+        },
+        {
+          "label": "🌱 seads",
+          "description": "Add or update seed files."
+        },
+        {
+          "label": "💬 literals",
+          "description": "Add or update text and literals."
+        },
+        {
+          "label": "🎉 initial commit",
+          "description": "Begin a project."
+        },
+        {
+          "label": "🚩 flags",
+          "description": "Add, update, or remove feature flags."
+        },
+        {
+          "label": "🚚 rename",
+          "description": "Move or rename resources (e.g.: files, paths, routes)."
+        },
+        {
+          "label": "🔀 merge",
+          "description": "Merge branches."
+        },
+        {
+          "label": "🗑 deprecate",
+          "description": "Deprecate code that needs to be cleaned up."
+        },
+        {
+          "label": "♿️ accessability",
+          "description": "Improve accessibility."
+        },
+        {
+          "label": "🔧 config",
+          "description": "Add or update configuration files."
+        }
+      ],
+      "description": "Type of changes"
+    },
+    {
+      "label": "Scope",
+      "name": "scope",
+      "description": "A scope may be provided to a commit's type, to provide additional contextual information and is contained within parenthesis, e.g., \"feat(parser): add ability to parse arrays\".",
+      "type": "text",
+      "multiline": false,
+      "prefix": "(",
+      "suffix": ")"
+    },
+    {
+      "label": "Short description",
+      "name": "description",
+      "description": "Short description in the subject line.",
+      "type": "text",
+      "multiline": false
+    },
+    {
+      "label": "Body",
+      "name": "body",
+      "description": "Optional body",
+      "type": "text",
+      "multiline": true,
+      "lines": 5,
+      "maxLines": 10
+    },
+    {
+      "label": "Breaking change",
+      "name": "breaking_change",
+      "type": "boolean",
+      "value": "BREAKING CHANGE: ",
+      "default": false
+    },
+    {
+      "label": "Footer",
+      "name": "footer",
+      "description": "Optional footer",
+      "type": "text",
+      "multiline": true
+    }
+  ],
+}

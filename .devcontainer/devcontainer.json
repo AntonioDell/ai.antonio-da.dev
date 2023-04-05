@@ -1,0 +1,45 @@
+{
+  "name": "Nuxt 3 + PostgreSQL",
+  "dockerComposeFile": [
+    "docker-compose.yml"
+  ],
+  "service": "devcontainer",
+  "remoteUser": "node",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "vscode": {
+      "extensions": [
+		"dbaeumer.vscode-eslint",
+		"Prisma.prisma",
+		"Vue.volar",
+		"adam-bender.commit-message-editor"
+	]
+    }
+  },
+  "forwardPorts": [
+    9000,
+    9432,
+    9080
+  ],
+  "portsAttributes": {
+    "9000": {
+      "label": "App",
+      "onAutoForward": "notify",
+      "requireLocalPort": true
+    },
+    "9432": {
+      "label": "Database",
+      "onAutoForward": "notify",
+      "requireLocalPort": true
+    },
+    "9080": {
+      "label": "Adminer",
+      "onAutoForward": "notify",
+      "requireLocalPort": true,
+      "protocol": "http"
+    }
+  },
+  "postCreateCommand": "/bin/bash -c './.devcontainer/postCreate.sh'",
+  "postStartCommand": "/bin/bash -c './.devcontainer/postStart.sh'"
+}

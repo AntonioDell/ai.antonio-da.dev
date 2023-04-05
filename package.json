@@ -10,6 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "^3.3.3"
+    "@types/node": "^18.15.11",
+    "nuxt": "^3.3.3",
+    "prisma": "^4.12.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.12.0"
   }
 }

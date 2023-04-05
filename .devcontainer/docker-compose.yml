@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    depends_on:
+      - db    
+    command: sleep infinity
+    network_mode: service:db
+    environment:
+      - HOST_HOME="${HOME}"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    ports:
+      - "9432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    command: npm run dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 9000:3000
+    depends_on:
+      - db
+  
+  adminer:
+    image: adminer
+    environment:
+      ADMINER_DESIGN: nette
+    ports:
+      - 9080:8080
+    depends_on:
+      - db
+
+volumes:
+  db-data:
