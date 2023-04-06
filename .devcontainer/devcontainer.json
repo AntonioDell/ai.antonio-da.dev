@@ -3,6 +3,9 @@
   "dockerComposeFile": [
     "docker-compose.yml"
   ],
+  "containerEnv": {
+    "DATABASE_URL": "postgresql://myuser:mypassword@db:5432/mydb"
+  },
   "service": "devcontainer",
   "remoteUser": "node",
   "workspaceFolder": "/workspace",
@@ -10,11 +13,11 @@
     "terminal.integrated.defaultProfile.linux": "bash",
     "vscode": {
       "extensions": [
-		"dbaeumer.vscode-eslint",
-		"Prisma.prisma",
-		"Vue.volar",
-		"adam-bender.commit-message-editor"
-	]
+        "dbaeumer.vscode-eslint",
+        "Prisma.prisma",
+        "Vue.volar",
+        "adam-bender.commit-message-editor"
+      ]
     }
   },
   "forwardPorts": [
