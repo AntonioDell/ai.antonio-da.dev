@@ -13,11 +13,13 @@
     "terminal.integrated.defaultProfile.linux": "bash",
     "vscode": {
       "extensions": [
-        "dbaeumer.vscode-eslint",
-        "Prisma.prisma",
-        "Vue.volar",
-        "adam-bender.commit-message-editor"
-      ]
+		"dbaeumer.vscode-eslint",
+		"Prisma.prisma",
+		"Vue.volar",
+		"adam-bender.commit-message-editor",
+		"vinliao.fast-arrow",
+		"esbenp.prettier-vscode"
+	]
     }
   },
   "forwardPorts": [
