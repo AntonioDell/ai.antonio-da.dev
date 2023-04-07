@@ -12,7 +12,7 @@ const redirectToGoogle = () => {
 </script>
 
 <template>
-  <div class="flex gap-4 flex-col justify-center">
+  <div class="container">
     <h1>Login Providers</h1>
     <button class="accent-button" @click="redirectToGoogle">Login with Google</button>
   </div>

@@ -19,7 +19,8 @@
 		"adam-bender.commit-message-editor",
 		"vinliao.fast-arrow",
 		"esbenp.prettier-vscode",
-		"bradlc.vscode-tailwindcss"
+		"bradlc.vscode-tailwindcss",
+		"wayou.vscode-todo-highlight"
 	]
     }
   },

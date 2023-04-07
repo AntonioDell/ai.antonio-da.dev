@@ -23,7 +23,7 @@ onMounted(async () => {
           },
         }
       )) as any;
-
+      // TODO: Do something with tokenResponse
       useRouter().push("/user/settings")
     } catch (error) {
       console.error("Error during token exchange:", error);
@@ -36,6 +36,6 @@ onMounted(async () => {
 
 <template>
   <div>
-    <h1>Auth Callback</h1>
+    <h1>You are being redirected ...</h1>
   </div>
 </template>
