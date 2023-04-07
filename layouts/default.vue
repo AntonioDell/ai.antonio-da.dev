@@ -9,7 +9,7 @@
       <NuxtLink
         href="https://github.com/AntonioDell/ai.antonio-da.dev"
         target="_blank"
-        >Github Repo</NuxtLink
+        >Github</NuxtLink
       >
     </div>
   </div>
