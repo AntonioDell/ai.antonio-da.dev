@@ -24,7 +24,7 @@ onMounted(async () => {
         }
       )) as any;
       // TODO: Do something with tokenResponse
-      useRouter().push("/user/settings")
+      await navigateTo("/user/settings")
     } catch (error) {
       console.error("Error during token exchange:", error);
     }
