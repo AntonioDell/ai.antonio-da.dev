@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // ...
+  modules: ["@nuxtjs/tailwindcss"],
   runtimeConfig: {
     db: {
       host: process.env.DB_HOST || "localhost",
@@ -10,11 +10,17 @@ export default defineNuxtConfig({
       database: process.env.DB_NAME || "mydb",
     },
   },
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
   vite: {
-   
     define: {
-      'process.env.GOOGLE_CLIENT_ID': JSON.stringify(process.env.GOOGLE_CLIENT_ID),
-      'process.env.GOOGLE_CLIENT_SECRET': JSON.stringify(process.env.GOOGLE_CLIENT_SECRET),
-    } 
-  }
+      "process.env.GOOGLE_CLIENT_ID": JSON.stringify(
+        process.env.GOOGLE_CLIENT_ID
+      ),
+      "process.env.GOOGLE_CLIENT_SECRET": JSON.stringify(
+        process.env.GOOGLE_CLIENT_SECRET
+      ),
+    },
+  },
 });

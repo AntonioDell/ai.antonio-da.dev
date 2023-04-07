@@ -18,7 +18,8 @@
 		"Vue.volar",
 		"adam-bender.commit-message-editor",
 		"vinliao.fast-arrow",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"bradlc.vscode-tailwindcss"
 	]
     }
   },
