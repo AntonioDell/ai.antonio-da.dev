@@ -12,33 +12,7 @@ const redirectToGoogle = () => {
 </script>
 
 <template>
-  <div class="login">
-    <h1>Login with Google</h1>
-    <button @click="redirectToGoogle">Login</button>
+  <div>
+    <button @click="redirectToGoogle">Login with Google</button>
   </div>
 </template>
-
-<style scoped>
-.login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #4285f4;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #1a73e8;
-}
-</style>
