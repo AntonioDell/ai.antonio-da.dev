@@ -3,7 +3,7 @@ onMounted(async () => {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   const currentOrigin = window.location.origin;
-  const redirectUri = `${currentOrigin}/user/settings`;
+  const redirectUri = `${currentOrigin}/auth/callback`;
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
 
@@ -24,7 +24,7 @@ onMounted(async () => {
         }
       )) as any;
 
-      console.log(tokenResponse);
+      useRouter().push("/user/settings")
     } catch (error) {
       console.error("Error during token exchange:", error);
     }
