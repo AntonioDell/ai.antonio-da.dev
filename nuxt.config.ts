@@ -13,4 +13,11 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
   },
+  vite: {
+    define: {
+      "process.env.GOOGLE_CLIENT_ID": JSON.stringify(
+        process.env.GOOGLE_CLIENT_ID
+      ),
+    },
+  },
 });
