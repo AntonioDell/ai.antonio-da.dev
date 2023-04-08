@@ -20,7 +20,8 @@
 		"vinliao.fast-arrow",
 		"esbenp.prettier-vscode",
 		"bradlc.vscode-tailwindcss",
-		"wayou.vscode-todo-highlight"
+		"wayou.vscode-todo-highlight",
+		"eamodio.gitlens"
 	]
     }
   },
