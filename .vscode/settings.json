@@ -316,4 +316,5 @@
       "multiline": true
     }
   ],
+  "editor.indentSize": 2
 }

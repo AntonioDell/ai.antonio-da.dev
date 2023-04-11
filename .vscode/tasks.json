@@ -9,14 +9,22 @@
       "command": "pnpm dev",
       "options": {
         "cwd": "${workspaceFolder}"
-      },
-      "group": {
-        "kind": "none",
-        "isDefault": true
-      },
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
+      }
+    },
+    {
+      "label": "Prisma generate",
+      "type": "shell",
+      "command": "pnpm generate:prisma",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "Migrate Prisma Schema",
+      "type": "shell",
+      "command": "pnpm migrate",
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     }
   ]

@@ -10,13 +10,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Submission {
+model Submissions {
   id              String    @id @default(uuid())
   contributerName String?    
   revealName      Boolean   @default(false)
   description     String?
   content         String
   published       Boolean   @default(false)
-
   @@map("submissions")
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum SubscriptionState {
+  NOT_VALIDATED
+  ACTIVE
+  CANCELLED
+}
+
+model Subscription {
+  id          String            @id @default(uuid())
+  email       String            @unique
+  frequency   Frequency         @default(WEEKLY)
+  state       SubscriptionState @default(NOT_VALIDATED)
+  @@map("subscriptions")
 }
