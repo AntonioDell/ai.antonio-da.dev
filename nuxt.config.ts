@@ -6,9 +6,11 @@ export default defineNuxtConfig({
     sendgridApiKey: "",
     jwtSecret: "",
     nodeEnv: "",
+    hcaptchaSecret: "",
     public: {
       apiUrl: "",
       googleClientId: "",
+      hcaptchaSiteKey: ""
     },
     db: {
       host: process.env.DB_HOST || "localhost",

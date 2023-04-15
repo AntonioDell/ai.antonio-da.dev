@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@hcaptcha/vue3-hcaptcha':
+    specifier: ^1.2.1
+    version: 1.2.1(vue@3.2.47)
   '@prisma/client':
     specifier: ^4.12.0
     version: 4.12.0(prisma@4.12.0)
@@ -587,6 +590,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@hcaptcha/vue3-hcaptcha@1.2.1(vue@3.2.47):
+    resolution: {integrity: sha512-v2lkkGLBKllPXfq5iACjG17jw9MTcQQVQxrfH6dM/MVZOclcVkiXRoRSGvpgQnz8OvYg4sto2jQSHW2yHAW4UA==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.2.47
+    dev: false
 
   /@ioredis/commands@1.2.0:
     resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}

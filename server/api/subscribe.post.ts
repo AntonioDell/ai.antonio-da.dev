@@ -22,13 +22,57 @@ function isValidEmail(email: string) {
 //TODO: Refactor please
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  if (!body.email || typeof body.email !== "string") return;
-  const prisma = new PrismaClient();
+
+  // hCaptcha Verification
+  if (!body.hcaptchaResponse) {
+    setResponseStatus(event, 400);
+    return { message: "No hCaptcha response set." };
+  }
+  try {
+    const { hcaptchaResponse } = body;
+    const { hcaptchaSecret } = useRuntimeConfig();
+    const result: any = await $fetch("https://hcaptcha.com/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: Object.entries({
+        secret: hcaptchaSecret,
+        response: hcaptchaResponse,
+      })
+        .map(
+          ([key, value]) =>
+            encodeURIComponent(key) + "=" + encodeURIComponent(value)
+        )
+        .join("&"),
+    });
+
+    if (!result.success) {
+      throw new Error("hCaptcha verification failed.");
+    }
+  } catch (error: Error | any) {
+    console.error(error);
+    if (error.message === "hCaptcha verification failed.") {
+      setResponseStatus(event, 400);
+      return { message: error.message };
+    } else {
+      setResponseStatus(event, 500);
+    }
+    return;
+  }
+
+  // Email address verification
+  if (!body.email || typeof body.email !== "string") {
+    setResponseStatus(event, 400);
+    return { message: "No email address set." };
+  }
   const email: string = body.email.toLowerCase();
   if (!isValidEmail(email)) {
     setResponseStatus(event, 400);
-    return;
+    return { message: "Invalid email address." };
   }
+
+  const prisma = new PrismaClient();
   try {
     await prisma.$connect();
     const existingSubscription = await prisma.subscription.findUnique({
@@ -39,7 +83,7 @@ export default defineEventHandler(async (event) => {
       existingSubscription.state === SubscriptionState.ACTIVE
     ) {
       setResponseStatus(event, 400);
-      return { message: "Email already registered" };
+      return { message: "Email address already in use." };
     }
     let subscription = existingSubscription;
     if (!subscription) {
@@ -51,9 +95,10 @@ export default defineEventHandler(async (event) => {
     const { sendgridApiKey, jwtSecret } = useRuntimeConfig();
     const sendGridKey = sendgridApiKey;
     if (!sendGridKey) {
-      throw {
+      setResponseStatus(event, 500);
+      return {
         message:
-          "Subscribing currently is not possible. Please try again later.",
+          "Subscribing is currently not possible. Please try again later.",
       };
     }
     sendGrid.setApiKey(sendGridKey);
@@ -80,10 +125,16 @@ export default defineEventHandler(async (event) => {
       return { status: "Ok" };
     } else {
       setResponseStatus(event, 500);
-      throw response;
+      return {
+        message:
+          "Subscribing is currently not possible. Please try again later.",
+      };
     }
   } catch (error: any) {
-    console.error(error);
+    setResponseStatus(event, 500);
+    return {
+      message: "Subscribing is currently not possible. Please try again later.",
+    };
   } finally {
     await prisma.$disconnect();
   }

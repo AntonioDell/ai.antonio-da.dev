@@ -21,7 +21,8 @@
 		"esbenp.prettier-vscode",
 		"bradlc.vscode-tailwindcss",
 		"wayou.vscode-todo-highlight",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"shakram02.bash-beautify"
 	]
     }
   },
