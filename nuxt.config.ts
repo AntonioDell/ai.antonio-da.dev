@@ -2,6 +2,14 @@
 export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss"],
   runtimeConfig: {
+    googleClientSecret: "",
+    sendgridApiKey: "",
+    jwtSecret: "",
+    nodeEnv: "",
+    public: {
+      apiUrl: "",
+      googleClientId: "",
+    },
     db: {
       host: process.env.DB_HOST || "localhost",
       port: process.env.DB_PORT || "5432",

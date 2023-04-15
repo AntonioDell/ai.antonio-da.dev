@@ -1,6 +1,5 @@
-import { IncomingMessage, ServerResponse } from "http";
-import { URLSearchParams } from "url";
 import fetch from "node-fetch";
+import { URLSearchParams } from "url";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
@@ -8,13 +7,13 @@ export default defineEventHandler(async (event) => {
     sendRedirect(event, "/");
     return;
   }
+  const { googleClientSecret } = useRuntimeConfig();
+  const googleClientId = useRuntimeConfig().public.googleClientId;
+
   const redirectUri = event.node.req.headers.referer?.split("?")[0] || "";
   const params = new URLSearchParams();
-  params.append("client_id", import.meta.env.GOOGLE_CLIENT_ID as string);
-  params.append(
-    "client_secret",
-    import.meta.env.GOOGLE_CLIENT_SECRET as string
-  );
+  params.append("client_id", googleClientId);
+  params.append("client_secret", googleClientSecret);
   params.append("redirect_uri", redirectUri);
   params.append("grant_type", "authorization_code");
   params.append("code", query.code as string);

@@ -15,5 +15,8 @@
         >!
       </p>
     </div>
+    <button class="accent-button" @click="useRouter().push('/subscribe')">
+      Subscribe
+    </button>
   </div>
 </template>

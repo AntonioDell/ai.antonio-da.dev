@@ -316,5 +316,11 @@
       "multiline": true
     }
   ],
-  "editor.indentSize": 2
+  "editor.indentSize": 2,
+  "[vue]": {
+    "gitlens.codeLens.scopes": [
+      "document"
+    ],
+    "editor.indentSize": 2
+  }
 }

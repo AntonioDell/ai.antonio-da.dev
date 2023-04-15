@@ -1,42 +1,85 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Subscription, SubscriptionState } from "@prisma/client";
 import sendGrid from "@sendgrid/mail";
+import jwt from "jsonwebtoken";
+import { joinURL, withQuery } from "ufo";
 
+interface SubscriptionVerificationMailTemplateData {
+  name?: string;
+  magicLink: string;
+}
+
+function createJWT(payload: object, secret: string) {
+  const expiresIn = 2 * 60 * 60; // 2 hours in seconds
+  const token = jwt.sign(payload, secret, { expiresIn });
+  return token;
+}
+
+function isValidEmail(email: string) {
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return emailRegex.test(email);
+}
+
+//TODO: Refactor please
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  if (!body.email) return;
+  if (!body.email || typeof body.email !== "string") return;
   const prisma = new PrismaClient();
-  const email: string = body.email;
-  // FIXME: Validate email
+  const email: string = body.email.toLowerCase();
+  if (!isValidEmail(email)) {
+    setResponseStatus(event, 400);
+    return;
+  }
   try {
     await prisma.$connect();
     const existingSubscription = await prisma.subscription.findUnique({
       where: { email },
     });
-    if (existingSubscription) {
-      // FIXME: Handle subscription already exists
-      return;
+    if (
+      existingSubscription &&
+      existingSubscription.state === SubscriptionState.ACTIVE
+    ) {
+      setResponseStatus(event, 400);
+      return { message: "Email already registered" };
     }
-    const newSubscription = await prisma.subscription.create({
-      data: { email },
-    });
+    let subscription = existingSubscription;
+    if (!subscription) {
+      subscription = await prisma.subscription.create({
+        data: { email },
+      });
+    }
 
-    const sendGridKey = import.meta.env.SENDGRID_API_KEY as string;
+    const { sendgridApiKey, jwtSecret } = useRuntimeConfig();
+    const sendGridKey = sendgridApiKey;
     if (!sendGridKey) {
-      // FIXME: Handle key missing -> 500
-      return;
+      throw {
+        message:
+          "Subscribing currently is not possible. Please try again later.",
+      };
     }
     sendGrid.setApiKey(sendGridKey);
-    const msg = {
-      to: "contact@antonio-da.dev", // Change to your recipient
-      from: "contact@antonio-da.dev", // Change to your verified sender
-      subject: "Sending with SendGrid is Fun",
-      text: "and easy to do anywhere, even with Node.js",
-      html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+    const token = createJWT(
+      { id: subscription.id, email: subscription.email },
+      jwtSecret
+    );
+    const magicLink = withQuery(
+      joinURL(useRuntimeConfig().public.apiUrl, "/verify"),
+      { token }
+    );
+    const dynamicTemplateData: SubscriptionVerificationMailTemplateData = {
+      name: "",
+      magicLink,
     };
-    const [response] = await sendGrid.send(msg);
+    // TODO: Use environment variables
+    const [response] = await sendGrid.send({
+      from: "newsletter@antonio-da.dev",
+      to: email,
+      templateId: "d-4531a47c23684b5a925f940c04bb0c66",
+      dynamicTemplateData,
+    });
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       return { status: "Ok" };
     } else {
+      setResponseStatus(event, 500);
       throw response;
     }
   } catch (error: any) {
