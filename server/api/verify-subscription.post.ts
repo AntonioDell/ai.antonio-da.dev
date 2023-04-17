@@ -1,24 +1,10 @@
 import { PrismaClient, SubscriptionState } from "@prisma/client";
-import jwt, { type JwtPayload } from "jsonwebtoken";
+import { verifyJWT } from "~/server/jwt";
 
-type ValidationResult =
-  | { isValid: true; email: string; id: string }
-  | { isValid: false };
-
-function verifyToken(token: string, secret: string): ValidationResult {
-  try {
-    const { id, email } = jwt.verify(token, secret) as JwtPayload;
-    return { isValid: true, id, email };
-  } catch (error: any) {
-    console.error("Error verifying JWT:", error);
-    return { isValid: false };
-  }
-}
 
 export default defineEventHandler(async (event) => {
-  const { jwtSecret } = useRuntimeConfig();
   const query = getQuery(event);
-  const result = verifyToken(query.token as string, jwtSecret);
+  const result = verifyJWT(query.token as string);
   if (!result.isValid) {
     setResponseStatus(event, 401);
     return;

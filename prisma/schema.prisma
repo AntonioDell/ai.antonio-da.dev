@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Submissions {
-  id              String    @id @default(uuid())
-  contributerName String?    
-  revealName      Boolean   @default(false)
+  id              String  @id @default(uuid())
+  contributerName String?
+  revealName      Boolean @default(false)
   description     String?
   content         String
-  published       Boolean   @default(false)
+  published       Boolean @default(false)
+
   @@map("submissions")
 }
 
@@ -33,9 +34,18 @@ enum SubscriptionState {
 }
 
 model Subscription {
-  id          String            @id @default(uuid())
-  email       String            @unique
-  frequency   Frequency         @default(WEEKLY)
-  state       SubscriptionState @default(NOT_VALIDATED)
+  id        String            @id @default(uuid())
+  email     String            @unique
+  frequency Frequency         @default(WEEKLY)
+  state     SubscriptionState @default(NOT_VALIDATED)
+
   @@map("subscriptions")
+}
+
+model Admin {
+  id        String  @id @default(uuid())
+  username  String  @unique
+  password  String
+
+  @@map("admins")
 }

@@ -1,17 +1,12 @@
-import { PrismaClient, Subscription, SubscriptionState } from "@prisma/client";
+import { PrismaClient, SubscriptionState } from "@prisma/client";
 import sendGrid from "@sendgrid/mail";
-import jwt from "jsonwebtoken";
 import { joinURL, withQuery } from "ufo";
+import { validateCaptchaResponse } from "~/server/captcha";
+import { createJWT } from "~/server/jwt";
 
 interface SubscriptionVerificationMailTemplateData {
   name?: string;
   magicLink: string;
-}
-
-function createJWT(payload: object, secret: string) {
-  const expiresIn = 2 * 60 * 60; // 2 hours in seconds
-  const token = jwt.sign(payload, secret, { expiresIn });
-  return token;
 }
 
 function isValidEmail(email: string) {
@@ -21,45 +16,12 @@ function isValidEmail(email: string) {
 
 //TODO: Refactor please
 export default defineEventHandler(async (event) => {
+  const captchaValidationResult = await validateCaptchaResponse(event);
+  if (!captchaValidationResult.isValid) {
+    return captchaValidationResult;
+  }
+
   const body = await readBody(event);
-
-  // hCaptcha Verification
-  if (!body.hcaptchaResponse) {
-    setResponseStatus(event, 400);
-    return { message: "No hCaptcha response set." };
-  }
-  try {
-    const { hcaptchaResponse } = body;
-    const { hcaptchaSecret } = useRuntimeConfig();
-    const result: any = await $fetch("https://hcaptcha.com/siteverify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: Object.entries({
-        secret: hcaptchaSecret,
-        response: hcaptchaResponse,
-      })
-        .map(
-          ([key, value]) =>
-            encodeURIComponent(key) + "=" + encodeURIComponent(value)
-        )
-        .join("&"),
-    });
-
-    if (!result.success) {
-      throw new Error("hCaptcha verification failed.");
-    }
-  } catch (error: Error | any) {
-    console.error(error);
-    if (error.message === "hCaptcha verification failed.") {
-      setResponseStatus(event, 400);
-      return { message: error.message };
-    } else {
-      setResponseStatus(event, 500);
-    }
-    return;
-  }
 
   // Email address verification
   if (!body.email || typeof body.email !== "string") {
@@ -92,7 +54,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const { sendgridApiKey, jwtSecret } = useRuntimeConfig();
+    const { sendgridApiKey } = useRuntimeConfig();
     const sendGridKey = sendgridApiKey;
     if (!sendGridKey) {
       setResponseStatus(event, 500);
@@ -104,7 +66,6 @@ export default defineEventHandler(async (event) => {
     sendGrid.setApiKey(sendGridKey);
     const token = createJWT(
       { id: subscription.id, email: subscription.email },
-      jwtSecret
     );
     const magicLink = withQuery(
       joinURL(useRuntimeConfig().public.apiUrl, "/verify"),

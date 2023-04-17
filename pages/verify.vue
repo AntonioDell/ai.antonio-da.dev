@@ -18,7 +18,7 @@ const error = ref("");
 onMounted(async () => {
   isVerifying.value = true;
   const token = useRoute().query.token;
-  const response = await useFetch("/api/verify", {
+  const response = await useFetch("/api/verify-subscription", {
     method: "POST",
     query: { token },
   });
