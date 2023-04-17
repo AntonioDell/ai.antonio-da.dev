@@ -21,7 +21,9 @@ export default defineEventHandler(async (event) => {
     const { username, password } = await schema.validate(body);
 
     await prisma.$connect();
-    const admin = await prisma.admin.findUnique({ where: { username } });
+    const admin = await prisma.admin.findUnique({
+      where: { username: username.toLowerCase() },
+    });
     if (!admin || admin.password !== password) throw { code: 401 };
 
     const token = createJWT(admin);
@@ -31,7 +33,7 @@ export default defineEventHandler(async (event) => {
       secure: useRuntimeConfig().nodeEnv === "production",
       sameSite: true,
     });
-    return { message: "Login successful" };
+    return { message: "Login succeeded" };
   } catch (error: any) {
     if ("name" in error && error.name === "ValidationError") {
       sendNoContent(event, 401);

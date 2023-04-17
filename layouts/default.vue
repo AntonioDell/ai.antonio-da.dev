@@ -10,6 +10,7 @@
         target="_blank"
         >Github</NuxtLink
       >
+      <NuxtLink href="/login" class="text-transparent">Admin</NuxtLink>
     </div>
   </div>
 </template>
@@ -31,5 +32,11 @@
 }
 .app-content {
   flex-grow: 1;
+}
+
+.app-footer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
 }
 </style>

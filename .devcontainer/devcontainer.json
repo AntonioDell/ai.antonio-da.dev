@@ -22,7 +22,8 @@
 		"bradlc.vscode-tailwindcss",
 		"wayou.vscode-todo-highlight",
 		"eamodio.gitlens",
-		"shakram02.bash-beautify"
+		"shakram02.bash-beautify",
+		"hollowtree.vue-snippets"
 	]
     }
   },

@@ -10,9 +10,20 @@
       :validation-schema="schema"
       v-slot="{ isSubmitting }"
     >
-      <Field class="accent-field" name="username" placeholder="Username" />
-      <Field class="accent-field" name="password" placeholder="Password" />
+      <Field
+        class="accent-field"
+        name="username"
+        placeholder="Username"
+        type="username"
+      />
+      <Field
+        class="accent-field"
+        name="password"
+        placeholder="Password"
+        type="password"
+      />
       <hcaptcha
+        ref="captcha"
         :sitekey="useRuntimeConfig().public.hcaptchaSiteKey"
         @verify="onCaptchaVerify"
         @expired="onCaptchaExpired"
@@ -32,6 +43,8 @@
 import { Form, Field } from "vee-validate";
 import { object, string } from "yup";
 import hcaptcha from "@hcaptcha/vue3-hcaptcha";
+
+const captcha = ref(null);
 
 const errorMessage = ref("");
 const success = ref(false);
@@ -53,6 +66,10 @@ const onSubmit = async (values: any) => {
     success.value = false;
   } else {
     success.value = true;
+    useRouter().push("/admin/manage-subscriptions")
+  }
+  if (captcha.value) {
+    (captcha.value as any).reset();
   }
 };
 
