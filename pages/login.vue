@@ -23,6 +23,7 @@
         type="password"
       />
       <hcaptcha
+        v-if="showCaptcha"
         ref="captcha"
         :sitekey="useRuntimeConfig().public.hcaptchaSiteKey"
         @verify="onCaptchaVerify"
@@ -73,7 +74,8 @@ const onSubmit = async (values: any) => {
   }
 };
 
-const isCaptchaVerified = ref(false);
+const showCaptcha = import.meta.env.VITE_SHOW_CAPTCHA === "true"
+const isCaptchaVerified = ref(false || !showCaptcha);
 const hcaptchaResponse = ref("");
 const onCaptchaVerify = (token: string) => {
   isCaptchaVerified.value = true;

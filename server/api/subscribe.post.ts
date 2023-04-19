@@ -16,9 +16,11 @@ function isValidEmail(email: string) {
 
 //TODO: Refactor please
 export default defineEventHandler(async (event) => {
-  const captchaValidationResult = await validateCaptchaResponse(event);
-  if (!captchaValidationResult.isValid) {
-    return captchaValidationResult;
+  if (useRuntimeConfig().nodeEnv === "production") {
+    const captchaValidationResult = await validateCaptchaResponse(event);
+    if (!captchaValidationResult.isValid) {
+      return captchaValidationResult;
+    }
   }
 
   const body = await readBody(event);
@@ -64,9 +66,7 @@ export default defineEventHandler(async (event) => {
       };
     }
     sendGrid.setApiKey(sendGridKey);
-    const token = createJWT(
-      { id: subscription.id, email: subscription.email },
-    );
+    const token = createJWT({ id: subscription.id, email: subscription.email });
     const magicLink = withQuery(
       joinURL(useRuntimeConfig().public.apiUrl, "/verify"),
       { token }

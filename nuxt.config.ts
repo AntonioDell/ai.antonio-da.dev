@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl: "",
       googleClientId: "",
-      hcaptchaSiteKey: ""
+      hcaptchaSiteKey: "",
     },
     db: {
       host: process.env.DB_HOST || "localhost",
@@ -22,12 +22,5 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
-  },
-  vite: {
-    define: {
-      "process.env.GOOGLE_CLIENT_ID": JSON.stringify(
-        process.env.GOOGLE_CLIENT_ID
-      ),
-    },
   },
 });

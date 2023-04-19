@@ -10,8 +10,16 @@ a {
   @apply text-green-800 duration-300 ease-in-out hover:text-black transition-all;
 }
 
+.base-button {
+  @apply p-2 text-white rounded duration-300 ease-in-out transition-all disabled:bg-gray-500;
+}
+
 .accent-button {
-  @apply p-2 bg-green-800 text-white rounded duration-300 ease-in-out hover:bg-black transition-all disabled:bg-gray-500;
+  @apply base-button bg-green-800;
+}
+
+.error-button {
+  @apply base-button bg-red-600;
 }
 
 .container {

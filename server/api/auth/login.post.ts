@@ -4,10 +4,12 @@ import { object, string } from "yup";
 import { createJWT, expiresIn } from "~/server/jwt";
 
 export default defineEventHandler(async (event) => {
-  const { isValid } = await validateCaptchaResponse(event);
-  if (!isValid) {
-    sendNoContent(event, 401);
-    return;
+  if (useRuntimeConfig().nodeEnv === "production") {
+    const { isValid } = await validateCaptchaResponse(event);
+    if (!isValid) {
+      sendNoContent(event, 401);
+      return;
+    }
   }
 
   const body = await readBody(event);
