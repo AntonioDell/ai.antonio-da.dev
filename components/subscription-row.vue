@@ -1,21 +1,12 @@
 <template>
   <div class="flex gap-4">
+    <input type="checkbox" @change="onCheckboxChange" />
     <div>{{ subscriptionData.email }}</div>
-    <select v-model="subscriptionData.state">
-      <option
-        v-for="state in subscriptionStates"
-        :key="state"
-        :value="state"
-        :selected="subscriptionData.state === state"
-      >
-        {{ state }}
-      </option>
-    </select>
+    <subscription-state-select v-model="subscriptionData.state" />
   </div>
 </template>
 <script setup lang="ts">
 import { Subscription } from "@prisma/client";
-import { SubscriptionState } from "@prisma/client";
 
 const { subscription } = defineProps<{
   subscription: Subscription;
@@ -23,6 +14,7 @@ const { subscription } = defineProps<{
 
 const emit = defineEmits<{
   (event: "subscription-changed", args: Subscription): void;
+  (event: "subscription-selected", args: boolean): void;
 }>();
 
 const subscriptionData = ref(subscription);
@@ -34,5 +26,8 @@ watch(
   { deep: true }
 );
 
-const subscriptionStates = SubscriptionState;
+const onCheckboxChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  emit("subscription-selected", target.checked);
+};
 </script>
