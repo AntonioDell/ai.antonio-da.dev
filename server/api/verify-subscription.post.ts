@@ -1,6 +1,7 @@
 import { PrismaClient, SubscriptionState } from "@prisma/client";
 import { verifyJWT } from "~/server/jwt";
 
+const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
@@ -10,9 +11,7 @@ export default defineEventHandler(async (event) => {
     return;
   }
 
-  const prisma = new PrismaClient();
   try {
-    await prisma.$connect();
     const { email, id } = result;
     await prisma.subscription.update({
       where: { id },
@@ -21,7 +20,5 @@ export default defineEventHandler(async (event) => {
     return { email };
   } catch (error) {
     setResponseStatus(event, 500);
-  } finally {
-    await prisma.$disconnect();
-  }
+  } 
 });

@@ -1,6 +1,7 @@
 import { Frequency, PrismaClient, SubscriptionState } from "@prisma/client";
 import { object, string } from "yup";
 
+const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   if (!event.context?.params?.id) {
     setResponseStatus(event, 400);
@@ -14,10 +15,8 @@ export default defineEventHandler(async (event) => {
     email: string().email().required(),
     frequency: string<Frequency>().optional(),
   });
-  const prisma = new PrismaClient();
   try {
     const subscription = await schema.validate(await readBody(event));
-    await prisma.$connect();
     await prisma.subscription.update({ where: { id }, data: subscription });
 
     return { status: "Ok" };
@@ -27,7 +26,5 @@ export default defineEventHandler(async (event) => {
     } else {
       sendNoContent(event, 500);
     }
-  } finally {
-    await prisma.$disconnect();
-  }
+  } 
 });

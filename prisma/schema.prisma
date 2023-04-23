@@ -38,14 +38,26 @@ model Subscription {
   email     String            @unique
   frequency Frequency         @default(WEEKLY)
   state     SubscriptionState @default(NOT_VALIDATED)
+  received  Newsletter[]
 
   @@map("subscriptions")
 }
 
+
+model Newsletter {
+  id          String         @id @default(uuid())
+  templateId  String
+  draftedAt   DateTime
+  publishedAt DateTime?
+  receivers   Subscription[]
+
+  @@map("newsletters")
+}
+
 model Admin {
-  id        String  @id @default(uuid())
-  username  String  @unique
-  password  String
+  id       String @id @default(uuid())
+  username String @unique
+  password String
 
   @@map("admins")
 }

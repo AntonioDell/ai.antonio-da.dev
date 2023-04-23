@@ -3,6 +3,7 @@ import { validateCaptchaResponse } from "~/server/captcha";
 import { object, string } from "yup";
 import { createJWT, expiresIn } from "~/server/jwt";
 
+const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   if (useRuntimeConfig().nodeEnv === "production") {
     const { isValid } = await validateCaptchaResponse(event);
@@ -18,11 +19,9 @@ export default defineEventHandler(async (event) => {
     username: string().required().max(100),
     password: string().required().max(100),
   });
-  const prisma = new PrismaClient();
   try {
     const { username, password } = await schema.validate(body);
 
-    await prisma.$connect();
     const admin = await prisma.admin.findUnique({
       where: { username: username.toLowerCase() },
     });
@@ -45,7 +44,5 @@ export default defineEventHandler(async (event) => {
       sendNoContent(event, 500);
     }
     return;
-  } finally {
-    await prisma.$disconnect();
   }
 });

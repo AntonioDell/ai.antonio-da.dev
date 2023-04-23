@@ -14,6 +14,7 @@ function isValidEmail(email: string) {
   return emailRegex.test(email);
 }
 
+const prisma = new PrismaClient();
 //TODO: Refactor please
 export default defineEventHandler(async (event) => {
   if (useRuntimeConfig().nodeEnv === "production") {
@@ -36,9 +37,7 @@ export default defineEventHandler(async (event) => {
     return { message: "Invalid email address." };
   }
 
-  const prisma = new PrismaClient();
   try {
-    await prisma.$connect();
     const existingSubscription = await prisma.subscription.findUnique({
       where: { email },
     });
@@ -96,7 +95,5 @@ export default defineEventHandler(async (event) => {
     return {
       message: "Subscribing is currently not possible. Please try again later.",
     };
-  } finally {
-    await prisma.$disconnect();
   }
 });

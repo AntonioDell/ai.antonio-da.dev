@@ -3,7 +3,7 @@
     @submit="onSubmit"
     class="flex flex-col gap-2 items-center"
     :validation-schema="schema"
-    v-slot="{ isSubmitting }"
+    v-slot="{ isSubmitting, meta }"
   >
     <p>
       Disclaimer: This feature doesn't work yet. It is in active development.
@@ -23,7 +23,9 @@
     <button
       type="submit"
       class="accent-button"
-      :disabled="isSubmitting || !isCaptchaVerified"
+      :disabled="
+        isSubmitting || !isCaptchaVerified || !meta.touched || !meta.valid
+      "
     >
       Subscribe
     </button>
@@ -34,7 +36,7 @@
 <script lang="ts" setup>
 import hcaptcha from "@hcaptcha/vue3-hcaptcha";
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { object, string } from "yup";
+import { InferType, object, string } from "yup";
 
 const successMessage = ref("");
 const errorMessage = ref("");
@@ -43,12 +45,13 @@ const schema = object({
   email: string().required().email(),
 });
 const onSubmit = async (values: any) => {
+  const formValues = values as InferType<typeof schema>;
   errorMessage.value = "";
   successMessage.value = "";
   const { error } = await useFetch("/api/subscribe", {
     method: "POST",
     body: JSON.stringify({
-      ...values,
+      ...formValues,
       hcaptchaResponse: hcaptchaResponse.value,
     }),
   });

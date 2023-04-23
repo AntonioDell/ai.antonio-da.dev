@@ -8,7 +8,7 @@
       class="flex flex-col gap-4"
       @submit="onSubmit"
       :validation-schema="schema"
-      v-slot="{ isSubmitting }"
+      v-slot="{ isSubmitting, meta }"
     >
       <Field
         class="accent-field"
@@ -31,7 +31,9 @@
       ></hcaptcha>
       <button
         class="accent-button"
-        :disabled="isSubmitting || !isCaptchaVerified"
+        :disabled="
+          isSubmitting || !isCaptchaVerified || !meta.valid || !meta.touched
+        "
       >
         Submit
       </button>
@@ -50,31 +52,31 @@ const captcha = ref(null);
 const errorMessage = ref("");
 const success = ref(false);
 const schema = object({
-  username: string().required(),
-  password: string().required(),
+  username: string().required().default(""),
+  password: string().required().default(""),
 });
 const onSubmit = async (values: any) => {
   errorMessage.value = "";
   const { error } = await useFetch("/api/auth/login", {
     method: "POST",
-    body: JSON.stringify({
+    body: {
       ...values,
       hcaptchaResponse: hcaptchaResponse.value,
-    }),
+    },
   });
   if (error.value) {
     errorMessage.value = "Login failed";
     success.value = false;
   } else {
     success.value = true;
-    useRouter().push("/admin/manage-subscriptions")
+    useRouter().push("/admin/manage-subscriptions");
   }
   if (captcha.value) {
     (captcha.value as any).reset();
   }
 };
 
-const showCaptcha = import.meta.env.VITE_SHOW_CAPTCHA === "true"
+const showCaptcha = import.meta.env.VITE_SHOW_CAPTCHA === "true";
 const isCaptchaVerified = ref(false || !showCaptcha);
 const hcaptchaResponse = ref("");
 const onCaptchaVerify = (token: string) => {

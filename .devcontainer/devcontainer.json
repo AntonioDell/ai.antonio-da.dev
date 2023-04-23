@@ -4,7 +4,7 @@
     "docker-compose.yml"
   ],
   "containerEnv": {
-    "DATABASE_URL": "postgresql://myuser:mypassword@db:5432/mydb"
+    "DATABASE_URL": "postgresql://myuser:mypassword@db:5432/mydb?connection_limit=1"
   },
   "service": "devcontainer",
   "remoteUser": "node",

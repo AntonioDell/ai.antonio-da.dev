@@ -8,7 +8,7 @@
       "type": "shell",
       "command": "pnpm dev",
       "options": {
-        "cwd": "${workspaceFolder}",
+        "cwd": "${workspaceFolder}"
       },
       "group": {
         "kind": "build",
@@ -30,6 +30,12 @@
       "options": {
         "cwd": "${workspaceFolder}"
       }
+    },
+    {
+      "label": "Refresh Prisma",
+      "type": "shell",
+      "dependsOn": ["Prisma Generate", "Migrate Prisma Schema"],
+      "dependsOrder": "sequence"
     }
   ]
 }

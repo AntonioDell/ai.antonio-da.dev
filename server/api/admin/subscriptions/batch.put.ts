@@ -1,6 +1,7 @@
 import { Frequency, PrismaClient, SubscriptionState } from "@prisma/client";
-import { InferType, Schema, array, number, object, string } from "yup";
+import { InferType, array, object, string } from "yup";
 
+const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const schema = array().of(
@@ -22,7 +23,6 @@ export default defineEventHandler(async (event) => {
     return;
   }
 
-  const prisma = new PrismaClient();
   try {
     const updateQueries = subscriptions!.map((subscription) =>
       prisma.subscription.update({
@@ -30,13 +30,10 @@ export default defineEventHandler(async (event) => {
         data: subscription,
       })
     );
-    await prisma.$connect();
     await prisma.$transaction(updateQueries);
     return { status: "Ok" };
   } catch (error: any) {
     sendNoContent(event, 500);
     return;
-  } finally {
-    await prisma.$disconnect();
   }
 });
