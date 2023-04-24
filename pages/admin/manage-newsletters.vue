@@ -29,6 +29,7 @@
       :newsletter="newsletter"
       :receivers="subscriptionsPerNewsletter.get(newsletter.id) || []"
       @newsletter-removed="onNewsletterRemoved"
+      @newsletter-published="onNewsletterPublished"
     />
   </div>
 </template>
@@ -104,4 +105,8 @@ const onNewsletterRemoved = async (newsletter: Newsletter) => {
   }
   await refreshNewsletters();
 };
+
+const onNewsletterPublished = async (newsletter: Newsletter) => {
+
+}
 </script>
