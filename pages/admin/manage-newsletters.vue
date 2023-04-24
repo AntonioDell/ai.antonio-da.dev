@@ -6,7 +6,7 @@
       :receivers="subscriptionsPerNewsletter.get(newsletter.id) || []"
     />
     <Form
-      @submit="onDraftSubmit"
+      @submit="onNewDraftSubmit"
       class="flex flex-col gap-2 items-center"
       :validation-schema="schema"
       v-slot="{ isSubmitting, meta }"
@@ -16,8 +16,12 @@
         class="accent-button"
         :disabled="isSubmitting || !meta.valid || !meta.touched"
       >
-        Create Draft
+        New Draft
       </button>
+      <div v-if="message" class="flex items-center gap-4">
+        <p>{{ message }}</p>
+        <button class="error-button" @click="message = ''">X</button>
+      </div>
     </Form>
   </div>
 </template>
@@ -60,11 +64,23 @@ watchEffect(async () => {
   }
 });
 
+const message = ref("");
 const schema = object({
   templateId: string().required(),
 });
 
-const onDraftSubmit = async (values: any) => {
+const onNewDraftSubmit = async (values: any) => {
   const formValues = values as InferType<typeof schema>;
+  const { error, data } = await useFetch("/api/admin/newsletters", {
+    method: "POST",
+    body: formValues,
+  });
+  console.log(error.value);
+  if (error.value) {
+    message.value = error.value.data.message;
+  } else {
+    message.value = "New draft successfully created!";
+  }
+  await refreshNewsletters();
 };
 </script>

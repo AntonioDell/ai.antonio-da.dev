@@ -1,5 +1,6 @@
 <template>
   <div class="flex gap-4">
+    <div>Template ID: {{ newsletterData.templateId }}</div>
     <div>Drafted: {{ newsletterData.draftedAt.toLocaleString("de") }}</div>
     <div>
       Published: {{ newsletterData.publishedAt?.toLocaleString("de") || "-" }}
