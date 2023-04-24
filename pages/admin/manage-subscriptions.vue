@@ -40,15 +40,11 @@ const subscriptions = computed(() => {
 });
 
 const onSubscriptionChanged = async (subscription: Subscription) => {
-  try {
-    await useFetch(`/api/admin/subscriptions/${subscription.id}`, {
-      method: "PUT",
-      body: subscription,
-    });
-    await refresh();
-  } catch (error: any) {
-    console.log(error);
-  }
+  await useFetch(`/api/admin/subscriptions/${subscription.id}`, {
+    method: "PUT",
+    body: subscription,
+  });
+  await refresh();
 };
 
 const selectedSubscriptions = ref<Set<Subscription>>(new Set());
@@ -65,27 +61,19 @@ const onSubscriptionSelected = (
 };
 
 const allSelectedState = ref<SubscriptionState | null>(null);
-watch(allSelectedState, (newValue, oldValue) => {
-  if (newValue === oldValue || !newValue) return;
-  console.log(newValue);
-});
 
 const areSelectedActionsDisabled = computed(() => {
   return selectedSubscriptions.value.size === 0;
 });
 const onApplyChanges = async () => {
   if (!allSelectedState.value || selectedSubscriptions.value.size === 0) return;
-  try {
-    await useFetch(`/api/admin/subscriptions/batch`, {
-      method: "PUT",
-      body: Array.from(selectedSubscriptions.value).map((subscription) => ({
-        ...subscription,
-        state: allSelectedState,
-      })),
-    });
-    await refresh();
-  } catch (error: any) {
-    console.log(error);
-  }
+  await useFetch(`/api/admin/subscriptions/batch`, {
+    method: "PUT",
+    body: Array.from(selectedSubscriptions.value).map((subscription) => ({
+      ...subscription,
+      state: allSelectedState,
+    })),
+  });
+  await refresh();
 };
 </script>

@@ -1,17 +1,17 @@
 <template>
   <div>
-    <newsletter-row
-      v-for="newsletter in newsletters"
-      :newsletter="newsletter"
-      :receivers="subscriptionsPerNewsletter.get(newsletter.id) || []"
-    />
     <Form
       @submit="onNewDraftSubmit"
       class="flex flex-col gap-2 items-center"
       :validation-schema="schema"
       v-slot="{ isSubmitting, meta }"
     >
-      <Field type="text" name="templateId" class="accent-field" />
+      <Field
+        type="text"
+        name="templateId"
+        class="accent-field"
+        placeholder="Template ID"
+      />
       <button
         class="accent-button"
         :disabled="isSubmitting || !meta.valid || !meta.touched"
@@ -23,6 +23,13 @@
         <button class="error-button" @click="message = ''">X</button>
       </div>
     </Form>
+    <newsletter-row
+      class="py-1"
+      v-for="newsletter in newsletters"
+      :newsletter="newsletter"
+      :receivers="subscriptionsPerNewsletter.get(newsletter.id) || []"
+      @newsletter-removed="onNewsletterRemoved"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -75,11 +82,25 @@ const onNewDraftSubmit = async (values: any) => {
     method: "POST",
     body: formValues,
   });
-  console.log(error.value);
   if (error.value) {
     message.value = error.value.data.message;
   } else {
     message.value = "New draft successfully created!";
+  }
+  await refreshNewsletters();
+};
+
+const onNewsletterRemoved = async (newsletter: Newsletter) => {
+  const { error, data } = await useFetch(
+    `/api/admin/newsletters/${newsletter.id}`,
+    {
+      method: "DELETE",
+    }
+  );
+  if (error.value) {
+    message.value = error.value.data.message;
+  } else {
+    message.value = data.value?.message!;
   }
   await refreshNewsletters();
 };
