@@ -5,9 +5,9 @@ import type {
   JWTAdminPayload,
 } from "./types";
 
-const expiresIn = 2 * 60 * 60;
+const EXPIRES_IN_2_HOURS = 2 * 60 * 60;
 
-function createJWT(payload: JWTSubscriptionPayload | JWTAdminPayload) {
+function createJWT(payload: JWTSubscriptionPayload | JWTAdminPayload, expiresIn: number = EXPIRES_IN_2_HOURS) {
   const { jwtSecret } = useRuntimeConfig();
   const token = jwt.sign(payload, jwtSecret, { expiresIn });
   return token;
@@ -23,4 +23,4 @@ function verifyJWT(token: string): JWTValidationResult {
     return { isValid: false };
   }
 }
-export { createJWT, expiresIn, verifyJWT };
+export { createJWT, EXPIRES_IN_2_HOURS, verifyJWT };

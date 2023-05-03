@@ -2,7 +2,7 @@
   <EmailForm
     :error-message="errorMessage"
     :success-message="successMessage"
-    submit-label="Subscribe"
+    submit-label="Unsubscribe"
     @submit="onSubmit"
   />
 </template>
@@ -19,7 +19,7 @@ const onSubmit = async ({
 }) => {
   errorMessage.value = "";
   successMessage.value = "";
-  const { error } = await useFetch("/api/subscribe", {
+  const { error } = await useFetch("/api/request-unsubscribe", {
     method: "POST",
     body: {
       email,
@@ -29,7 +29,7 @@ const onSubmit = async ({
   if (error.value) {
     errorMessage.value = error.value.data?.message || "";
   } else {
-    successMessage.value = "You received a confirmation email.";
+    successMessage.value = "You received an email to unsubscribe.";
   }
 };
 </script>

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const result = verifyJWT(query.token as string);
   if (!result.isValid) {
     setResponseStatus(event, 401);
-    return;
+    return { message: "Invalid token" };
   }
 
   const { id } = result;
@@ -18,5 +18,7 @@ export default defineEventHandler(async (event) => {
     });
     return { status: "Ok" };
   } catch (error: any) {
-  } 
+    setResponseStatus(event, 500);
+    return { message: "Database error" };
+  }
 });

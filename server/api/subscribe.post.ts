@@ -1,17 +1,13 @@
 import { PrismaClient, SubscriptionState } from "@prisma/client";
-import sendGrid from "@sendgrid/mail";
+import mail from "@sendgrid/mail";
 import { joinURL, withQuery } from "ufo";
 import { validateCaptchaResponse } from "~/server/captcha";
 import { createJWT } from "~/server/jwt";
+import { isValidEmail } from "../utils";
 
 interface SubscriptionVerificationMailTemplateData {
   name?: string;
   magicLink: string;
-}
-
-function isValidEmail(email: string) {
-  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-  return emailRegex.test(email);
 }
 
 const prisma = new PrismaClient();
@@ -64,18 +60,17 @@ export default defineEventHandler(async (event) => {
           "Subscribing is currently not possible. Please try again later.",
       };
     }
-    sendGrid.setApiKey(sendGridKey);
+    mail.setApiKey(sendGridKey);
     const token = createJWT({ id: subscription.id, email: subscription.email });
     const magicLink = withQuery(
-      joinURL(useRuntimeConfig().public.apiUrl, "/verify"),
+      joinURL(useRuntimeConfig().public.baseUrl, "/verify-subscription"),
       { token }
     );
     const dynamicTemplateData: SubscriptionVerificationMailTemplateData = {
       name: "",
       magicLink,
     };
-    // TODO: Use environment variables
-    const [response] = await sendGrid.send({
+    const [response] = await mail.send({
       from: "newsletter@antonio-da.dev",
       to: email,
       templateId: "d-4531a47c23684b5a925f940c04bb0c66",

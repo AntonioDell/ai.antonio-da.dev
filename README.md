@@ -31,7 +31,7 @@ Some environment variables are expected to be set. Not having them set will resu
 | NUXT_GOOGLE_CLIENT_SECRET     | The Client Secret for your Google OAuth 2.0 application, used for authenticating with Google APIs. |
 | NUXT_SENDGRID_API_KEY         | The API key for your SendGrid account, used for sending emails via the SendGrid API.               |
 | NUXT_JWT_SECRET               | The secret key for signing and verifying JSON Web Tokens (JWT) in your application.                |
-| NUXT_PUBLIC_API_URL           | The base URL for your API, used to make API requests from your application.                        |
+| NUXT_PUBLIC_BASE_URL          | The base URL of the website.                                                                       |
 | NUXT_PUBLIC_HCAPTCHA_SITE_KEY | The site key for hCaptcha challenges.                                                              |
 | NUXT_HCAPTCHA_SECRET          | The hCaptcha secret to verify challenge results.                                                   |
 

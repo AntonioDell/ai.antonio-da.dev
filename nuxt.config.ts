@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     nodeEnv: "",
     hcaptchaSecret: "",
     public: {
-      apiUrl: "",
+      baseUrl: "",
       googleClientId: "",
       hcaptchaSiteKey: "",
     },

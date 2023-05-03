@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { validateCaptchaResponse } from "~/server/captcha";
 import { object, string } from "yup";
-import { createJWT, expiresIn } from "~/server/jwt";
+import { createJWT, EXPIRES_IN_2_HOURS } from "~/server/jwt";
 
 const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     const token = createJWT(admin);
     setCookie(event, "jwt", token, {
       httpOnly: true,
-      maxAge: expiresIn,
+      maxAge: EXPIRES_IN_2_HOURS,
       secure: useRuntimeConfig().nodeEnv === "production",
       sameSite: true,
     });
