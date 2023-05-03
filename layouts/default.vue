@@ -11,6 +11,7 @@
         target="_blank"
         >Github</NuxtLink
       >
+      <NuxtLink to="/privacy-notice">Datenschutzerklärung</NuxtLink>
       <NuxtLink href="/login" class="text-transparent">Admin</NuxtLink>
     </div>
   </div>
