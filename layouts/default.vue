@@ -2,6 +2,7 @@
   <div class="app-container">
     <div class="app-header">
       <NuxtLink href="/">Home</NuxtLink>
+      <NuxtLink href="/faq">FAQ</NuxtLink>
     </div>
     <div class="app-content"><slot /></div>
     <div class="app-footer">
