@@ -6,6 +6,10 @@ h1 {
   @apply text-3xl text-center;
 }
 
+h2 {
+  @apply text-lg font-medium;
+}
+
 a {
   @apply text-green-800 duration-300 ease-in-out hover:text-black transition-all;
 }
@@ -23,7 +27,7 @@ a {
 }
 
 .container {
-  @apply flex gap-4 flex-col justify-center;
+  @apply flex gap-4 flex-col justify-center max-w-lg;
 }
 
 .accent-field {
