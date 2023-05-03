@@ -3,16 +3,14 @@
     <h1>FAQ</h1>
     <section>
       <h2>Wo kann ich den Newsletter abonnieren?</h2>
-      <p>
-        <NuxtLink to="/subscribe">HIER</NuxtLink> kannst du den Newsletter
-        abonnieren.
+      <p class="text-center">
+        <NuxtLink to="/subscribe">HIER</NuxtLink>
       </p>
     </section>
     <section>
       <h2>Wo kann ich den Newsletter abbestellen?</h2>
-      <p>
-        Du kannst den Newsletter
-        <NuxtLink to="/unsubscribe">HIER</NuxtLink> abbestellen.
+      <p class="text-center">
+        <NuxtLink to="/unsubscribe">HIER</NuxtLink>
       </p>
     </section>
     <section>
@@ -29,6 +27,9 @@
           href="https://www.twilio.com/en-us/legal/privacy#data-about-our-customers-end-users"
           >HIER</a
         >.
+        <br />
+        Siehe auch:
+        <NuxtLink to="/privacy-notice">Datenschutzerklärung</NuxtLink>.
       </p>
     </section>
   </div>
