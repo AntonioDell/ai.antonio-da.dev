@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/i18n"],
   runtimeConfig: {
     googleClientSecret: "",
     sendgridApiKey: "",
@@ -22,5 +22,49 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
+  },
+  i18n: {
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "i18n_redirected",
+      redirectOn: "root",
+      alwaysRedirect: true,
+      fallbackLocale: "de",
+    },
+    locales: [
+      {
+        code: "de",
+        name: "🇩🇪",
+      },
+      {
+        code: "en",
+        name: "🇬🇧",
+      },
+    ],
+    defaultLocale: "de",
+    strategy: "prefix_and_default",
+    customRoutes: "config",
+    pages: {
+      index: {
+        en: "/",
+        de: "/",
+      },
+      faq: {
+        en: "/faq",
+        de: "/faq",
+      },
+      "privacy-notice": {
+        en: "/privacy-notice",
+        de: "/datenschutz",
+      },
+      subscribe: {
+        en: "/subscribe",
+        de: "/abonnieren",
+      },
+      unsubscribe: {
+        en: "/unsubscribe",
+        de: "/deabonnieren",
+      },
+    },
   },
 });

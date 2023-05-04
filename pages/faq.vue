@@ -4,13 +4,13 @@
     <section>
       <h2>Wo kann ich den Newsletter abonnieren?</h2>
       <p class="text-center">
-        <NuxtLink to="/subscribe">HIER</NuxtLink>
+        <NuxtLink :to="localePath({ name: 'subscribe' })">HIER</NuxtLink>
       </p>
     </section>
     <section>
       <h2>Wo kann ich den Newsletter abbestellen?</h2>
       <p class="text-center">
-        <NuxtLink to="/unsubscribe">HIER</NuxtLink>
+        <NuxtLink :to="localePath({ name: 'unsubscribe' })">HIER</NuxtLink>
       </p>
     </section>
     <section>
@@ -29,8 +29,11 @@
         >.
         <br />
         Siehe auch:
-        <NuxtLink to="/privacy-notice">Datenschutzerklärung</NuxtLink>.
+        <NuxtLink :to="localePath({ name: 'privacy-notice' })">Datenschutzerklärung</NuxtLink>.
       </p>
     </section>
   </div>
 </template>
+<script setup lang="ts">
+const localePath = useLocalePath();
+</script>

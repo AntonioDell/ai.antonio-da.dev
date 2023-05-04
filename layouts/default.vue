@@ -1,26 +1,41 @@
 <template>
   <div class="app-container">
     <div class="app-header">
-      <NuxtLink href="/">Home</NuxtLink>
-      <NuxtLink href="/faq">FAQ</NuxtLink>
+      <div class="positioned-center">
+        <NuxtLink :to="localePath({ name: 'index' })">Home</NuxtLink>
+        <NuxtLink :to="localePath({ name: 'faq' })">FAQ</NuxtLink>
+      </div>
+
+      <LangSwitcher class="positioned-right top-0" />
     </div>
     <div class="app-content"><slot /></div>
     <div class="app-footer">
+      <div class="positioned-center">
+        <NuxtLink
+          href="https://github.com/AntonioDell/ai.antonio-da.dev"
+          target="_blank"
+          >Github</NuxtLink
+        >
+        <NuxtLink :to="localePath({ name: 'privacy-notice' })"
+          >Datenschutzerklärung</NuxtLink
+        >
+      </div>
       <NuxtLink
-        href="https://github.com/AntonioDell/ai.antonio-da.dev"
-        target="_blank"
-        >Github</NuxtLink
+        href="/login"
+        class="text-transparent positioned-right bottom-0"
       >
-      <NuxtLink to="/privacy-notice">Datenschutzerklärung</NuxtLink>
-      <NuxtLink href="/login" class="text-transparent">Admin</NuxtLink>
+        Admin
+      </NuxtLink>
     </div>
   </div>
 </template>
+<script setup lang="ts">
+const localePath = useLocalePath();
+</script>
 <style>
 .app-header {
-  display: flex;
-  justify-content: flex-start;
-  gap: 2rem;
+  width: 100vw;
+  display: relative;
 }
 .app-container {
   display: flex;
@@ -35,10 +50,19 @@
 .app-content {
   flex-grow: 1;
 }
-
 .app-footer {
+  width: 100vw;
+  display: relative;
+}
+.positioned-center {
   display: flex;
-  justify-content: flex-start;
+  width: 100%;
   gap: 2rem;
+  justify-content: center;
+}
+.positioned-right {
+  position: absolute;
+  right: 0;
+  padding: 1rem;
 }
 </style>

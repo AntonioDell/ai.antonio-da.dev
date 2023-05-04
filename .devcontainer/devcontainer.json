@@ -24,7 +24,8 @@
 		"eamodio.gitlens",
 		"shakram02.bash-beautify",
 		"hollowtree.vue-snippets",
-		"yoavbls.pretty-ts-errors"
+		"yoavbls.pretty-ts-errors",
+		"bierner.emojisense"
 	]
     }
   },
