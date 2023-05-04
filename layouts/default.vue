@@ -16,7 +16,7 @@
           target="_blank"
           >Github</NuxtLink
         >
-        <NuxtLink :to="localePath({ name: 'privacy-notice' })"
+        <NuxtLink :to="localePath({ name: 'privacy-policy' })"
           >Datenschutzerklärung</NuxtLink
         >
       </div>

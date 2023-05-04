@@ -53,8 +53,8 @@ export default defineNuxtConfig({
         en: "/faq",
         de: "/faq",
       },
-      "privacy-notice": {
-        en: "/privacy-notice",
+      "privacy-policy": {
+        en: "/privacy-policy",
         de: "/datenschutz",
       },
       subscribe: {

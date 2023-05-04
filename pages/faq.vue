@@ -29,7 +29,7 @@
         >.
         <br />
         Siehe auch:
-        <NuxtLink :to="localePath({ name: 'privacy-notice' })">Datenschutzerklärung</NuxtLink>.
+        <NuxtLink :to="localePath({ name: 'privacy-policy' })">Datenschutzerklärung</NuxtLink>.
       </p>
     </section>
   </div>
