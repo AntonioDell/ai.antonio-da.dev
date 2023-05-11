@@ -25,7 +25,8 @@
 		"shakram02.bash-beautify",
 		"hollowtree.vue-snippets",
 		"yoavbls.pretty-ts-errors",
-		"bierner.emojisense"
+		"bierner.emojisense",
+		"lokalise.i18n-ally"
 	]
     }
   },

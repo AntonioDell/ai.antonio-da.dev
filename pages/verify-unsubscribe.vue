@@ -2,18 +2,20 @@
   <div class="container">
     <span v-if="errorMessage">
       {{ errorMessage }}
-      <NuxtLink to="/unsubscribe">Go to unsubscribe page</NuxtLink>
+      <NuxtLink to="/unsubscribe">{{ t("Go to unsubscribe page") }}</NuxtLink>
     </span>
-    <span v-else>You have been unsubscribed</span>
+    <span v-else>{{ t("You have been unsubscribed") }}</span>
   </div>
 </template>
+
 <script setup lang="ts">
+const { t } = useI18n();
 const errorMessage = ref("");
 
 onMounted(async () => {
   const token = useRoute().query.token;
   if (!token) {
-    errorMessage.value = "You need to unsubscribe first.";
+    errorMessage.value = t("You need to unsubscribe first.");
     return;
   }
 
@@ -22,8 +24,9 @@ onMounted(async () => {
     method: "POST",
   });
   if (error.value?.statusCode === 401) {
-    errorMessage.value =
-      "The unsubscribe link is not valid anymore, please try again";
+    errorMessage.value = t(
+      "The unsubscribe link is not valid anymore, please try again"
+    );
   }
 });
 </script>

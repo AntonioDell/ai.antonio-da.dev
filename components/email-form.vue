@@ -9,7 +9,7 @@
       class="accent-field"
       name="email"
       type="email"
-      placeholder="Your email address"
+      :placeholder="t('Your email address')"
     />
 
     <ErrorMessage name="email" class="text-red-500" />
@@ -39,6 +39,7 @@ import hcaptcha from "@hcaptcha/vue3-hcaptcha";
 
 type EmailFormSubmit = { email: string; hcaptchaResponse: string };
 
+const { t } = useI18n();
 const emit = defineEmits<{
   (events: "submit", args: EmailFormSubmit): void;
 }>();
@@ -47,8 +48,6 @@ const { errorMessage, successMessage, submitLabel } = defineProps<{
   successMessage: string;
   submitLabel: string;
 }>();
-
-const token = useRoute().query.token;
 
 const schema = object({
   email: string().required().email(),

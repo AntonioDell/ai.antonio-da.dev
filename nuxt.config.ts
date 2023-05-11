@@ -28,7 +28,6 @@ export default defineNuxtConfig({
       useCookie: true,
       cookieKey: "i18n_redirected",
       redirectOn: "root",
-      alwaysRedirect: true,
       fallbackLocale: "de",
     },
     locales: [
@@ -63,8 +62,12 @@ export default defineNuxtConfig({
       },
       unsubscribe: {
         en: "/unsubscribe",
-        de: "/deabonnieren",
+        de: "/abmelden",
       },
+      "verify-unsubscribe": {
+        en: "/verify-unsubscribe",
+        de: "/abmeldung-verifizieren"
+      }
     },
   },
 });

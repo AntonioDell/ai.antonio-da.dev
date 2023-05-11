@@ -2,21 +2,21 @@
 
 <template>
   <div class="container">
-    <h1>Welcome to ai.antonio-da.dev!</h1>
+    <h1>{{ $t("Welcome to ai.antonio-da.dev!") }}</h1>
     <div>
-      <p>This site is currently under construction.</p>
+      <p>{{ $t("This site is currently under construction.") }}</p>
       <p>
-        In the meantime checkout the
+        {{$t("In the meantime checkout the")}}
         <NuxtLink
           href="https://github.com/AntonioDell/ai.antonio-da.dev"
           target="_blank"
           rel="noopener noreferrer"
-          >source code</NuxtLink
+          >{{$t("source code")}}</NuxtLink
         >!
       </p>
     </div>
     <button class="accent-button" @click="useRouter().push('/subscribe')">
-      Subscribe
+      {{$t("Subscribe to the Newsletter")}}
     </button>
   </div>
 </template>

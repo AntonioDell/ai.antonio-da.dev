@@ -2,8 +2,8 @@
   <div class="app-container">
     <div class="app-header">
       <div class="positioned-center">
-        <NuxtLink :to="localePath({ name: 'index' })">Home</NuxtLink>
-        <NuxtLink :to="localePath({ name: 'faq' })">FAQ</NuxtLink>
+        <NuxtLink :to="localePath({ name: 'index' })">{{ t("Home") }}</NuxtLink>
+        <NuxtLink :to="localePath({ name: 'faq' })">{{ t("FAQ") }}</NuxtLink>
       </div>
 
       <LangSwitcher class="positioned-right top-0" />
@@ -16,9 +16,9 @@
           target="_blank"
           >Github</NuxtLink
         >
-        <NuxtLink :to="localePath({ name: 'privacy-policy' })"
-          >Datenschutzerklärung</NuxtLink
-        >
+        <NuxtLink :to="localePath({ name: 'privacy-policy' })">{{
+          t("Privacy Policy")
+        }}</NuxtLink>
       </div>
       <NuxtLink
         href="/login"
@@ -29,9 +29,12 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 const localePath = useLocalePath();
+const { t } = useI18n();
 </script>
+
 <style>
 .app-header {
   width: 100vw;

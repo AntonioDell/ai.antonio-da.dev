@@ -2,13 +2,15 @@
   <EmailForm
     :error-message="errorMessage"
     :success-message="successMessage"
-    submit-label="Unsubscribe"
+    :submit-label="t('Unsubscribe')"
     @submit="onSubmit"
   />
 </template>
 <script setup lang="ts">
 const errorMessage = ref("");
 const successMessage = ref("");
+
+const { t } = useI18n();
 
 const onSubmit = async ({
   email,
@@ -29,7 +31,7 @@ const onSubmit = async ({
   if (error.value) {
     errorMessage.value = error.value.data?.message || "";
   } else {
-    successMessage.value = "You received an email to unsubscribe.";
+    successMessage.value = t("You received an email to unsubscribe.");
   }
 };
 </script>

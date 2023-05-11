@@ -2,13 +2,14 @@
   <EmailForm
     :error-message="errorMessage"
     :success-message="successMessage"
-    submit-label="Subscribe"
+    :submit-label="t('Subscribe')"
     @submit="onSubmit"
   />
 </template>
 <script setup lang="ts">
 const errorMessage = ref("");
 const successMessage = ref("");
+const { t } = useI18n()
 
 const onSubmit = async ({
   email,
@@ -29,7 +30,7 @@ const onSubmit = async ({
   if (error.value) {
     errorMessage.value = error.value.data?.message || "";
   } else {
-    successMessage.value = "You received a confirmation email.";
+    successMessage.value = t("You received a confirmation email.");
   }
 };
 </script>
