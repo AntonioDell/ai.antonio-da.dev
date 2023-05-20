@@ -12,25 +12,25 @@
     "migrate": "prisma migrate dev --name initial_migration"
   },
   "devDependencies": {
-    "@nuxt/test-utils": "^3.3.3",
-    "@nuxtjs/i18n-edge": "8.0.0-beta.12-28063610.1a8bd68",
-    "@nuxtjs/tailwindcss": "^6.6.5",
-    "@types/jsonwebtoken": "^9.0.1",
-    "@types/node": "^18.15.11",
-    "nuxt": "^3.4.2",
-    "prisma": "^4.12.0",
-    "vitest": "^0.30.0"
+    "@nuxt/test-utils": "^3.5.0",
+    "@nuxtjs/i18n-edge": "8.0.0-beta.12-28065601.76e2626",
+    "@nuxtjs/tailwindcss": "^6.7.0",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^20.2.1",
+    "nuxt": "^3.5.0",
+    "prisma": "^4.14.1",
+    "vitest": "^0.31.1"
   },
   "dependencies": {
     "@hcaptcha/vue3-hcaptcha": "^1.2.1",
-    "@prisma/client": "^4.12.0",
+    "@prisma/client": "^4.14.1",
     "@sendgrid/client": "^7.7.0",
     "@sendgrid/mail": "^7.7.0",
     "dayjs": "^1.11.7",
     "jsonwebtoken": "^9.0.0",
     "superjson": "^1.12.3",
-    "ufo": "^1.1.1",
-    "vee-validate": "^4.8.4",
-    "yup": "^1.1.0"
+    "ufo": "^1.1.2",
+    "vee-validate": "^4.9.4",
+    "yup": "^1.1.1"
   }
 }
