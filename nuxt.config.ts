@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/i18n-edge"],
+  plugins: [{ src: "~/plugins/vercel.ts", mode: "client" }],
   runtimeConfig: {
     googleClientSecret: "",
     sendgridApiKey: "",
@@ -66,8 +67,8 @@ export default defineNuxtConfig({
       },
       "verify-unsubscribe": {
         en: "/verify-unsubscribe",
-        de: "/abmeldung-verifizieren"
-      }
+        de: "/abmeldung-verifizieren",
+      },
     },
   },
 });
